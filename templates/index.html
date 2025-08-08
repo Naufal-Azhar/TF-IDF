@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Search Engine</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 2rem;
+        color: #333;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 3rem;
+        animation: slideDown 0.8s ease-out;
+      }
+
+      .header h1 {
+        color: white;
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .header p {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.2rem;
+        font-weight: 300;
+      }
+
+      .search-container {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+        animation: slideUp 0.8s ease-out 0.2s both;
+      }
+
+      .search-form {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .search-input-wrapper {
+        position: relative;
+        flex: 1;
+        min-width: 300px;
+      }
+
+      .search-input {
+        width: 100%;
+        padding: 1rem 1rem 1rem 3rem;
+        border: 2px solid #e1e5e9;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        background: white;
+      }
+
+      .search-input:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        transform: translateY(-2px);
+      }
+
+      .search-icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #9ca3af;
+        font-size: 1.2rem;
+      }
+
+      .search-button {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        min-width: 120px;
+        justify-content: center;
+      }
+
+      .search-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0, 126, 234, 0.4);
+      }
+
+      .search-button:active {
+        transform: translateY(-1px);
+      }
+
+      .results-container {
+        animation: fadeIn 0.8s ease-out 0.4s both;
+      }
+
+      .results-header {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 15px;
+        padding: 1.5rem 2rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .results-header h2 {
+        color: #667eea;
+        font-size: 1.8rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .results-count {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      .result-item {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 15px;
+        padding: 2rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border-left: 4px solid #667eea;
+        transition: all 0.3s ease;
+        animation: slideInLeft 0.6s ease-out;
+      }
+
+      .result-item:hover {
+        transform: translateX(10px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+      }
+
+      .result-filename {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #667eea;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .result-score {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+        padding: 0.4rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+
+      .result-content {
+        color: #4b5563;
+        line-height: 1.7;
+        font-size: 1rem;
+        background: rgba(249, 250, 251, 0.8);
+        padding: 1.5rem;
+        border-radius: 10px;
+        border-left: 3px solid #e5e7eb;
+      }
+
+      .no-results {
+        text-align: center;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 15px;
+        padding: 3rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        color: #6b7280;
+        font-size: 1.2rem;
+      }
+
+      .loading {
+        text-align: center;
+        padding: 2rem;
+      }
+
+      .spinner {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(102, 126, 234, 0.3);
+        border-radius: 50%;
+        border-top-color: #667eea;
+        animation: spin 1s ease-in-out infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes slideInLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        body {
+          padding: 1rem;
+        }
+
+        .header h1 {
+          font-size: 2.5rem;
+        }
+
+        .search-form {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .search-input-wrapper {
+          min-width: auto;
+        }
+
+        .search-button {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .result-item {
+          padding: 1.5rem;
+        }
+
+        .result-item:hover {
+          transform: translateY(-5px);
+        }
+      }
+
+      /* Dark mode toggle */
+      .dark-mode-toggle {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        color: white;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+      }
+
+      .dark-mode-toggle:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.1);
+      }
+
+      /* Search History Styles */
+      .history-container {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        padding: 1.5rem 2rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+        animation: slideUp 0.8s ease-out 0.3s both;
+      }
+
+      .history-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #f3f4f6;
+      }
+
+      .history-title {
+        color: #667eea;
+        font-size: 1.3rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .clear-history-btn {
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+      }
+
+      .clear-history-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
+      }
+
+      .history-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+      }
+
+      .history-item {
+        background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+        border: 1px solid #e2e8f0;
+        border-radius: 25px;
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+        color: #475569;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        position: relative;
+        animation: fadeInScale 0.4s ease-out;
+      }
+
+      .history-item:hover {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+      }
+
+      .history-item:hover .remove-history-item {
+        opacity: 1;
+      }
+
+      .remove-history-item {
+        background: rgba(239, 68, 68, 0.9);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 0.7rem;
+        opacity: 0;
+        transition: all 0.3s ease;
+        margin-left: 0.3rem;
+      }
+
+      .remove-history-item:hover {
+        background: #dc2626;
+        transform: scale(1.2);
+      }
+
+      .history-empty {
+        text-align: center;
+        color: #9ca3af;
+        font-style: italic;
+        padding: 1rem;
+      }
+
+      .toggle-history-btn {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        padding: 0.7rem 1.5rem;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin: 0 auto 2rem;
+        backdrop-filter: blur(10px);
+      }
+
+      .toggle-history-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+      }
+
+      .history-container.hidden {
+        display: none;
+      }
+
+      /* Floating particles background effect */
+      .particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .particle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 50%;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
+          opacity: 0.5;
+        }
+        50% {
+          transform: translateY(-100px) rotate(180deg);
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeInScale {
+        from {
+          opacity: 0;
+          transform: scale(0.8);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="particles">
+      <div class="particle" style="left: 10%; animation-delay: 0s"></div>
+      <div class="particle" style="left: 20%; animation-delay: 1s"></div>
+      <div class="particle" style="left: 30%; animation-delay: 2s"></div>
+      <div class="particle" style="left: 40%; animation-delay: 3s"></div>
+      <div class="particle" style="left: 50%; animation-delay: 4s"></div>
+      <div class="particle" style="left: 60%; animation-delay: 5s"></div>
+      <div class="particle" style="left: 70%; animation-delay: 0.5s"></div>
+      <div class="particle" style="left: 80%; animation-delay: 1.5s"></div>
+      <div class="particle" style="left: 90%; animation-delay: 2.5s"></div>
+    </div>
+
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">
+      <i class="fas fa-moon"></i>
+    </button>
+
+    <div class="container">
+      <div class="header">
+        <h1><i class="fas fa-search"></i> Smart Search Engine</h1>
+        <p>Temukan informasi yang Anda butuhkan dengan cepat dan akurat</p>
+      </div>
+
+      <div class="search-container">
+        <form method="POST" class="search-form">
+          <div class="search-input-wrapper">
+            <i class="fas fa-search search-icon"></i>
+            <input
+              type="text"
+              name="query"
+              class="search-input"
+              id="searchInput"
+              placeholder="Masukkan kata kunci pencarian..."
+              value="{{ query }}"
+              required
+              autocomplete="off"
+            />
+          </div>
+          <button type="submit" class="search-button">
+            <i class="fas fa-search"></i>
+            Cari
+          </button>
+        </form>
+      </div>
+
+      <button class="toggle-history-btn" onclick="toggleHistory()">
+        <i class="fas fa-history"></i>
+        <span id="historyToggleText">Tampilkan Riwayat</span>
+      </button>
+
+      <div class="history-container hidden" id="historyContainer">
+        <div class="history-header">
+          <h3 class="history-title">
+            <i class="fas fa-clock"></i>
+            Riwayat Pencarian
+          </h3>
+          <button class="clear-history-btn" onclick="clearAllHistory()">
+            <i class="fas fa-trash"></i>
+            Hapus Semua
+          </button>
+        </div>
+        <div class="history-list" id="historyList">
+          <div class="history-empty" id="historyEmpty">
+            Belum ada riwayat pencarian
+          </div>
+        </div>
+      </div>
+
+      {% if results %}
+      <div class="results-container">
+        <div class="results-header">
+          <h2>
+            <i class="fas fa-list-ul"></i>
+            Hasil Pencarian
+            <span class="results-count">{{ results|length }} hasil</span>
+          </h2>
+        </div>
+
+        {% for filename, doc, score in results %}
+        <div class="result-item">
+          <div class="result-filename">
+            <i class="fas fa-file-alt"></i>
+            {{ filename }}
+          </div>
+          <div class="result-score">
+            <i class="fas fa-star"></i>
+            Skor: {{ "%.2f"|format(score) }}
+          </div>
+          <div class="result-content">
+            {{ doc[:400] }}{% if doc|length > 400 %}...{% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% elif query %}
+      <div class="no-results">
+        <i
+          class="fas fa-search"
+          style="font-size: 3rem; margin-bottom: 1rem; color: #9ca3af"
+        ></i>
+        <h3>Tidak ada hasil ditemukan</h3>
+        <p>Coba gunakan kata kunci yang berbeda atau periksa ejaan Anda.</p>
+      </div>
+      {% endif %}
+    </div>
+
+    <script>
+      // Search History Management using localStorage
+      let searchHistory = [];
+      const maxHistoryItems = 10;
+
+      // Function to save history to localStorage
+      function saveHistory() {
+        localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+      }
+
+      // Function to load history from localStorage
+      function loadHistory() {
+        const saved = localStorage.getItem('searchHistory');
+        if (saved) {
+          searchHistory = JSON.parse(saved);
+          updateHistoryDisplay();
+        }
+      }
+
+      // Add loading animation on form submit
+      document.querySelector(".search-form").addEventListener("submit", function(e) {
+        const button = document.querySelector(".search-button");
+        const query = document.getElementById("searchInput").value.trim();
+
+        if (query) {
+          addToHistory(query);
+        }
+
+        button.innerHTML = '<div class="spinner"></div> Mencari...';
+        button.disabled = true;
+      });
+
+      // Function to add query to history
+      function addToHistory(query) {
+        // Remove if already exists
+        searchHistory = searchHistory.filter(item => item !== query);
+
+        // Add to beginning
+        searchHistory.unshift(query);
+
+        // Limit to max items
+        if (searchHistory.length > maxHistoryItems) {
+          searchHistory = searchHistory.slice(0, maxHistoryItems);
+        }
+
+        updateHistoryDisplay();
+        saveHistory();
+      }
+
+      // Function to remove item from history
+      function removeFromHistory(query) {
+        searchHistory = searchHistory.filter(item => item !== query);
+        updateHistoryDisplay();
+        saveHistory();
+      }
+
+      // Function to clear all history
+      function clearAllHistory() {
+        if (confirm("Apakah Anda yakin ingin menghapus semua riwayat pencarian?")) {
+          searchHistory = [];
+          updateHistoryDisplay();
+          localStorage.removeItem('searchHistory');
+        }
+      }
+
+      // Load history when page loads
+      document.addEventListener("DOMContentLoaded", function() {
+        loadHistory();
+        
+        // Show history container if there are items
+        if (searchHistory.length > 0) {
+          document.getElementById("historyContainer").classList.remove("hidden");
+          document.getElementById("historyToggleText").textContent = "Sembunyikan Riwayat";
+        }
+
+        // Add staggered animation to results
+        const results = document.querySelectorAll(".result-item");
+        results.forEach((result, index) => {
+          result.style.animationDelay = `${index * 0.1}s`;
+        });
+      });
+
+      // Function to update history display
+      function updateHistoryDisplay() {
+        const historyList = document.getElementById("historyList");
+        const historyEmpty = document.getElementById("historyEmpty");
+
+        if (searchHistory.length === 0) {
+          historyList.innerHTML =
+            '<div class="history-empty">Belum ada riwayat pencarian</div>';
+          return;
+        }
+
+        const historyHTML = searchHistory
+          .map(
+            (query) => `
+                <div class="history-item" onclick="searchFromHistory('${query.replace(
+                  /'/g,
+                  "\\'"
+                )}')">
+                    <i class="fas fa-search" style="font-size: 0.8rem;"></i>
+                    <span>${escapeHtml(query)}</span>
+                    <button class="remove-history-item" onclick="event.stopPropagation(); removeFromHistory('${query.replace(
+                      /'/g,
+                      "\\'"
+                    )}')" title="Hapus dari riwayat">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `
+          )
+          .join("");
+
+        historyList.innerHTML = historyHTML;
+      }
+
+      // Function to search from history
+      function searchFromHistory(query) {
+        document.getElementById("searchInput").value = query;
+        document.querySelector(".search-form").submit();
+      }
+
+      // Function to escape HTML
+      function escapeHtml(text) {
+        const map = {
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#039;",
+        };
+        return text.replace(/[&<>"']/g, function (m) {
+          return map[m];
+        });
+      }
+
+      // Function to toggle history visibility
+      function toggleHistory() {
+        const container = document.getElementById("historyContainer");
+        const toggleText = document.getElementById("historyToggleText");
+
+        if (container.classList.contains("hidden")) {
+          container.classList.remove("hidden");
+          toggleText.textContent = "Sembunyikan Riwayat";
+        } else {
+          container.classList.add("hidden");
+          toggleText.textContent = "Tampilkan Riwayat";
+        }
+      }
+
+      // Dark mode toggle functionality
+      function toggleDarkMode() {
+        document.body.classList.toggle("dark-mode");
+        const icon = document.querySelector(".dark-mode-toggle i");
+
+        if (document.body.classList.contains("dark-mode")) {
+          icon.className = "fas fa-sun";
+          document.body.style.background =
+            "linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)";
+        } else {
+          icon.className = "fas fa-moon";
+          document.body.style.background =
+            "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
+        }
+      }
+
+      // Add floating effect to search input
+      const searchInput = document.querySelector(".search-input");
+      searchInput.addEventListener("focus", function () {
+        this.parentElement.style.transform = "translateY(-5px)";
+      });
+
+      searchInput.addEventListener("blur", function () {
+        this.parentElement.style.transform = "translateY(0)";
+      });
+
+      // Keyboard shortcuts
+      document.addEventListener("keydown", function (e) {
+        // Ctrl + K to focus search
+        if (e.ctrlKey && e.key === "k") {
+          e.preventDefault();
+          document.getElementById("searchInput").focus();
+        }
+
+        // Escape to clear search
+        if (e.key === "Escape") {
+          document.getElementById("searchInput").value = "";
+        }
+      });
+    </script>
+  </body>
+</html>
+        // Escape to clear search
+        if (e.key === "Escape") {
+          document.getElementById("searchInput").value = "";
+        }
+      });
+    </script>
+  </body>
+</html>
