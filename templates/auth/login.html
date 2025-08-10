@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Smart Search Engine</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        margin: 0;
+        padding: 2rem;
+        display: grid;
+        place-items: center;
+        color: #333;
+      }
+      .card {
+        width: 100%;
+        max-width: 440px;
+        background: rgba(255,255,255,0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        animation: rise 0.5s ease-out;
+      }
+      .title {
+        display: flex;
+        align-items: center;
+        gap: .6rem;
+        color: #667eea;
+        margin-bottom: .25rem;
+      }
+      .subtitle { color: #6b7280; margin-bottom: 1.5rem; }
+      .form-group { margin-bottom: 1rem; }
+      label { display:block; color:#374151; margin-bottom:.4rem; font-weight:600; }
+      input[type=text], input[type=password] {
+        width: 100%;
+        padding: .8rem 1rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: all .2s ease;
+        background: white;
+      }
+      input:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102,126,234,.12);
+      }
+      .actions { display:flex; align-items:center; justify-content:space-between; margin-top: 1rem; }
+      .btn {
+        display:inline-flex; align-items:center; gap:.5rem;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white; border: none; padding: .8rem 1.2rem; border-radius: 12px;
+        cursor: pointer; font-weight: 600;
+        transition: transform .15s ease, box-shadow .2s ease;
+      }
+      .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(102,126,234,.35); }
+      .link { color: #4f46e5; text-decoration: none; font-weight:600; }
+      .link:hover { text-decoration: underline; }
+
+      .flash-messages { width: 100%; max-width: 520px; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1000; }
+      .flash-message { background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: .5rem; box-shadow: 0 10px 30px rgba(0,0,0,.2); display:flex; align-items:center; gap:.6rem; border-left:4px solid; }
+      .flash-message.success { border-left-color:#10b981; color:#065f46; }
+      .flash-message.error { border-left-color:#ef4444; color:#7f1d1d; }
+      .flash-message.warning { border-left-color:#f59e0b; color:#78350f; }
+
+      @keyframes rise { from { opacity:0; transform: translateY(16px);} to { opacity:1; transform:none; } }
+    </style>
+  </head>
+  <body>
+    <div class="flash-messages">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="flash-message {{ category }}">
+              <i class="fas fa-{{ 'check-circle' if category == 'success' else 'exclamation-triangle' if category == 'warning' else 'times-circle' }}"></i>
+              <span>{{ message }}</span>
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+    </div>
+
+    <div class="card">
+      <h2 class="title"><i class="fas fa-sign-in-alt"></i> Login</h2>
+      <p class="subtitle">Masuk untuk mengakses Smart Search Engine</p>
+      <form method="POST" action="{{ url_for('login', next=request.args.get('next')) }}">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" placeholder="Masukkan username" value="{{ username or '' }}" required />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Masukkan password" required />
+        </div>
+        <div class="actions">
+          <a class="link" href="{{ url_for('register') }}">Belum punya akun? Daftar</a>
+          <button type="submit" class="btn"><i class="fas fa-arrow-right"></i> Login</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

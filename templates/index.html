@@ -24,7 +24,7 @@
       }
 
       .container {
-        max-width: 1200px;
+        max-width: 1600px;
         margin: 0 auto;
       }
 
@@ -48,13 +48,41 @@
         font-weight: 300;
       }
 
+      .typewriter {
+        color: rgba(255, 255, 255, 0.95);
+        font-size: 1.3rem;
+        font-weight: 600;
+        min-height: 1.6em;
+        display: inline-block;
+        border-right: 2px solid rgba(255, 255, 255, 0.9);
+        white-space: nowrap;
+        overflow: hidden;
+        animation: caretBlink 0.8s step-end infinite;
+      }
+
+      @keyframes caretBlink {
+        50% { border-color: transparent; }
+      }
+
+      .main-content {
+        display: grid;
+        grid-template-columns: 1fr 480px;
+        gap: 2rem;
+        align-items: start;
+      }
+
+      .left-column {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
       .search-container {
         background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(20px);
         border-radius: 20px;
         padding: 2rem;
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-        margin-bottom: 2rem;
         animation: slideUp 0.8s ease-out 0.2s both;
       }
 
@@ -121,6 +149,296 @@
 
       .search-button:active {
         transform: translateY(-1px);
+      }
+
+      /* File Management Sidebar */
+      .file-management {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        animation: slideInRight 0.8s ease-out 0.4s both;
+        position: sticky;
+        top: 2rem;
+        max-height: 80vh;
+        overflow-y: auto;
+      }
+
+      .file-management h3 {
+        color: #667eea;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        border-bottom: 2px solid #f3f4f6;
+        padding-bottom: 1rem;
+      }
+
+      /* Upload Form */
+      .upload-section {
+        margin-bottom: 2rem;
+      }
+
+      .upload-area {
+        border: 2px dashed #d1d5db;
+        border-radius: 15px;
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+      }
+
+      .upload-area:hover {
+        border-color: #667eea;
+        background: linear-gradient(135deg, #f0f4ff, #e0e7ff);
+        transform: scale(1.02);
+      }
+
+      .upload-area.dragover {
+        border-color: #10b981;
+        background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+        transform: scale(1.05);
+      }
+
+      .upload-icon {
+        font-size: 3rem;
+        color: #9ca3af;
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .upload-area:hover .upload-icon {
+        color: #667eea;
+        transform: scale(1.1);
+      }
+
+      .upload-text {
+        color: #6b7280;
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .upload-hint {
+        color: #9ca3af;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+
+      .file-input {
+        display: none;
+      }
+
+      .upload-btn {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 25px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 1rem;
+      }
+
+      .upload-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+      }
+
+      .upload-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      /* File List */
+      .file-list-section {
+        margin-top: 2rem;
+      }
+
+      .file-list-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .file-count {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 15px;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+
+      .reload-btn {
+        background: linear-gradient(135deg, #6b7280, #4b5563);
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+      }
+
+      .reload-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(107, 114, 128, 0.4);
+      }
+
+      .file-list {
+        max-height: 60vh;
+        overflow-y: auto;
+      }
+
+      .file-item {
+        background: rgba(249, 250, 251, 0.8);
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 1rem;
+        margin-bottom: 0.75rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.3s ease;
+        animation: fadeInScale 0.4s ease-out;
+      }
+
+      .file-item:hover {
+        background: rgba(102, 126, 234, 0.1);
+        border-color: #667eea;
+        transform: translateX(5px);
+      }
+
+      .file-info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+      }
+
+      .file-name {
+        font-weight: 600;
+        color: #374151;
+        font-size: 0.95rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
+
+      .file-type-icon {
+        color: #ef4444;
+      }
+
+      .file-type-icon.txt {
+        color: #3b82f6;
+      }
+
+      .file-size {
+        color: #6b7280;
+        font-size: 0.8rem;
+      }
+
+      .file-actions {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .delete-btn {
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        color: white;
+        border: none;
+        padding: 0.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 35px;
+        height: 35px;
+      }
+
+      .delete-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 15px rgba(239, 68, 68, 0.4);
+      }
+
+      .empty-files {
+        text-align: center;
+        color: #9ca3af;
+        padding: 2rem;
+        font-style: italic;
+      }
+
+      /* Flash Messages */
+      .flash-messages {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+        width: 90%;
+        max-width: 500px;
+      }
+
+      .flash-message {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 12px;
+        padding: 1rem 1.5rem;
+        margin-bottom: 0.5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        animation: slideDownBounce 0.6s ease-out;
+        border-left: 4px solid;
+      }
+
+      .flash-message.success {
+        border-left-color: #10b981;
+        color: #065f46;
+      }
+
+      .flash-message.error {
+        border-left-color: #ef4444;
+        color: #7f1d1d;
+      }
+
+      .flash-message.warning {
+        border-left-color: #f59e0b;
+        color: #78350f;
+      }
+
+      .flash-close {
+        background: none;
+        border: none;
+        font-size: 1.2rem;
+        cursor: pointer;
+        color: inherit;
+        opacity: 0.7;
+        transition: opacity 0.3s ease;
+        margin-left: auto;
+      }
+
+      .flash-close:hover {
+        opacity: 1;
       }
 
       .results-container {
@@ -269,6 +587,32 @@
         }
       }
 
+      @keyframes slideInRight {
+        from {
+          opacity: 0;
+          transform: translateX(50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes slideDownBounce {
+        0% {
+          opacity: 0;
+          transform: translateY(-100px);
+        }
+        60% {
+          opacity: 1;
+          transform: translateY(10px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
       @keyframes fadeIn {
         from {
           opacity: 0;
@@ -278,10 +622,36 @@
         }
       }
 
+      @keyframes fadeInScale {
+        from {
+          opacity: 0;
+          transform: scale(0.8);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
       /* Responsive Design */
+      @media (max-width: 1024px) {
+        .main-content {
+          grid-template-columns: 1fr;
+        }
+
+        .file-management {
+          position: static;
+          max-height: none;
+        }
+      }
+
       @media (max-width: 768px) {
         body {
           padding: 1rem;
+        }
+
+        .container {
+          max-width: 100%;
         }
 
         .header h1 {
@@ -309,6 +679,18 @@
         .result-item:hover {
           transform: translateY(-5px);
         }
+
+        .file-management {
+          padding: 1.5rem;
+        }
+
+        .upload-area {
+          padding: 1.5rem;
+        }
+
+        .upload-icon {
+          font-size: 2rem;
+        }
       }
 
       /* Dark mode toggle */
@@ -326,147 +708,12 @@
         cursor: pointer;
         transition: all 0.3s ease;
         backdrop-filter: blur(10px);
+        z-index: 1001;
       }
 
       .dark-mode-toggle:hover {
         background: rgba(255, 255, 255, 0.3);
         transform: scale(1.1);
-      }
-
-      /* Search History Styles */
-      .history-container {
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(20px);
-        border-radius: 20px;
-        padding: 1.5rem 2rem;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-        margin-bottom: 2rem;
-        animation: slideUp 0.8s ease-out 0.3s both;
-      }
-
-      .history-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1rem;
-        padding-bottom: 1rem;
-        border-bottom: 2px solid #f3f4f6;
-      }
-
-      .history-title {
-        color: #667eea;
-        font-size: 1.3rem;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      .clear-history-btn {
-        background: linear-gradient(135deg, #ef4444, #dc2626);
-        color: white;
-        border: none;
-        padding: 0.5rem 1rem;
-        border-radius: 25px;
-        font-size: 0.9rem;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 0.3rem;
-      }
-
-      .clear-history-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
-      }
-
-      .history-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.8rem;
-      }
-
-      .history-item {
-        background: linear-gradient(135deg, #f8fafc, #e2e8f0);
-        border: 1px solid #e2e8f0;
-        border-radius: 25px;
-        padding: 0.6rem 1rem;
-        font-size: 0.9rem;
-        color: #475569;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        position: relative;
-        animation: fadeInScale 0.4s ease-out;
-      }
-
-      .history-item:hover {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
-      }
-
-      .history-item:hover .remove-history-item {
-        opacity: 1;
-      }
-
-      .remove-history-item {
-        background: rgba(239, 68, 68, 0.9);
-        color: white;
-        border: none;
-        border-radius: 50%;
-        width: 20px;
-        height: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        font-size: 0.7rem;
-        opacity: 0;
-        transition: all 0.3s ease;
-        margin-left: 0.3rem;
-      }
-
-      .remove-history-item:hover {
-        background: #dc2626;
-        transform: scale(1.2);
-      }
-
-      .history-empty {
-        text-align: center;
-        color: #9ca3af;
-        font-style: italic;
-        padding: 1rem;
-      }
-
-      .toggle-history-btn {
-        background: rgba(255, 255, 255, 0.2);
-        border: none;
-        color: white;
-        padding: 0.7rem 1.5rem;
-        border-radius: 25px;
-        font-size: 0.9rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        margin: 0 auto 2rem;
-        backdrop-filter: blur(10px);
-      }
-
-      .toggle-history-btn:hover {
-        background: rgba(255, 255, 255, 0.3);
-        transform: translateY(-2px);
-      }
-
-      .history-container.hidden {
-        display: none;
       }
 
       /* Floating particles background effect */
@@ -500,20 +747,25 @@
           opacity: 1;
         }
       }
-
-      @keyframes fadeInScale {
-        from {
-          opacity: 0;
-          transform: scale(0.8);
-        }
-        to {
-          opacity: 1;
-          transform: scale(1);
-        }
-      }
     </style>
   </head>
   <body>
+    <!-- Flash Messages -->
+    <div class="flash-messages" id="flashMessages">
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %}
+      <div class="flash-message {{ category }}">
+        <i
+          class="fas fa-{{ 'check-circle' if category == 'success' else 'exclamation-triangle' if category == 'warning' else 'times-circle' }}"
+        ></i>
+        <span>{{ message }}</span>
+        <button class="flash-close" onclick="this.parentElement.remove()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      {% endfor %} {% endif %} {% endwith %}
+    </div>
+
     <div class="particles">
       <div class="particle" style="left: 10%; animation-delay: 0s"></div>
       <div class="particle" style="left: 20%; animation-delay: 1s"></div>
@@ -533,288 +785,365 @@
     <div class="container">
       <div class="header">
         <h1><i class="fas fa-search"></i> Smart Search Engine</h1>
-        <p>Temukan informasi yang Anda butuhkan dengan cepat dan akurat</p>
+        <p id="typewriter" class="typewriter" aria-label="Typewriter welcome"></p>
       </div>
 
-      <div class="search-container">
-        <form method="POST" class="search-form">
-          <div class="search-input-wrapper">
-            <i class="fas fa-search search-icon"></i>
-            <input
-              type="text"
-              name="query"
-              class="search-input"
-              id="searchInput"
-              placeholder="Masukkan kata kunci pencarian..."
-              value="{{ query }}"
-              required
-              autocomplete="off"
-            />
+      <div class="main-content">
+        <div class="left-column">
+          <div class="search-container">
+            <form method="POST" class="search-form">
+              <div class="search-input-wrapper">
+                <i class="fas fa-search search-icon"></i>
+                <input
+                  type="text"
+                  name="query"
+                  class="search-input"
+                  id="searchInput"
+                  placeholder="Masukkan kata kunci pencarian..."
+                  value="{{ query }}"
+                  required
+                  autocomplete="off"
+                />
+              </div>
+              <button type="submit" class="search-button">
+                <i class="fas fa-search"></i>
+                Cari
+              </button>
+            </form>
           </div>
-          <button type="submit" class="search-button">
-            <i class="fas fa-search"></i>
-            Cari
-          </button>
-        </form>
-      </div>
 
-      <button class="toggle-history-btn" onclick="toggleHistory()">
-        <i class="fas fa-history"></i>
-        <span id="historyToggleText">Tampilkan Riwayat</span>
-      </button>
+          {% if results %}
+          <div class="results-container">
+            <div class="results-header">
+              <h2>
+                <i class="fas fa-list-ul"></i>
+                Hasil Pencarian
+                <span class="results-count">{{ results|length }} hasil</span>
+              </h2>
+            </div>
 
-      <div class="history-container hidden" id="historyContainer">
-        <div class="history-header">
-          <h3 class="history-title">
-            <i class="fas fa-clock"></i>
-            Riwayat Pencarian
+            {% for filename, doc, score in results %}
+            <div class="result-item">
+              <div class="result-filename">
+                <i
+                  class="fas fa-file-{{ 'pdf' if filename.endswith('.pdf') else 'alt' }}"
+                ></i>
+                {{ filename }}
+              </div>
+              <div class="result-score">
+                <i class="fas fa-star"></i>
+                Skor: {{ "%.2f"|format(score) }}
+              </div>
+              <div class="result-content">
+                {{ doc[:400] }}{% if doc|length > 400 %}...{% endif %}
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          {% elif query %}
+          <div class="no-results">
+            <i
+              class="fas fa-search"
+              style="font-size: 3rem; margin-bottom: 1rem; color: #9ca3af"
+            ></i>
+            <h3>Tidak ada hasil ditemukan</h3>
+            <p>Coba gunakan kata kunci yang berbeda atau periksa ejaan Anda.</p>
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- File Management Sidebar -->
+        <div class="file-management">
+          <h3>
+            <i class="fas fa-folder-open"></i>
+            Manajemen File
           </h3>
-          <button class="clear-history-btn" onclick="clearAllHistory()">
-            <i class="fas fa-trash"></i>
-            Hapus Semua
-          </button>
-        </div>
-        <div class="history-list" id="historyList">
-          <div class="history-empty" id="historyEmpty">
-            Belum ada riwayat pencarian
-          </div>
-        </div>
-      </div>
 
-      {% if results %}
-      <div class="results-container">
-        <div class="results-header">
-          <h2>
-            <i class="fas fa-list-ul"></i>
-            Hasil Pencarian
-            <span class="results-count">{{ results|length }} hasil</span>
-          </h2>
-        </div>
+          <!-- Upload Section -->
+          <div class="upload-section">
+            <form
+              action="{{ url_for('upload_file') }}"
+              method="POST"
+              enctype="multipart/form-data"
+              id="uploadForm"
+            >
+              <div
+                class="upload-area"
+                id="uploadArea"
+                onclick="document.getElementById('fileInput').click()"
+              >
+                <div class="upload-icon">
+                  <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <div class="upload-text">Klik untuk memilih file</div>
+                <div class="upload-hint">atau seret dan lepas file di sini</div>
+                <div class="upload-hint">
+                  Mendukung multiple file .txt dan .pdf (Maks 200MB)
+                </div>
+              </div>
+              <input
+                type="file"
+                id="fileInput"
+                name="files[]"
+                class="file-input"
+                accept=".txt,.pdf"
+                multiple
+                onchange="handleFileSelect(this)"
+              />
+              
+              <button type="submit" class="upload-btn">
+                <i class="fas fa-upload"></i> Upload Files
+              </button>
+            </form>
+          </div>
 
-        {% for filename, doc, score in results %}
-        <div class="result-item">
-          <div class="result-filename">
-            <i class="fas fa-file-alt"></i>
-            {{ filename }}
-          </div>
-          <div class="result-score">
-            <i class="fas fa-star"></i>
-            Skor: {{ "%.2f"|format(score) }}
-          </div>
-          <div class="result-content">
-            {{ doc[:400] }}{% if doc|length > 400 %}...{% endif %}
+          <!-- File List Section -->
+          <div class="file-list-section">
+            <div class="file-list-header">
+              <h4 style="color: #374151; font-size: 1.1rem; font-weight: 600">
+                Daftar File {% if files %}
+                <span class="file-count">{{ files|length }} file</span>
+                {% endif %}
+              </h4>
+              <div style="display:flex; gap: 0.5rem; align-items:center;">
+                <form
+                  action="{{ url_for('reload_index') }}"
+                  method="POST"
+                  style="display: inline"
+                >
+                  <button type="submit" class="reload-btn" title="Reload Index">
+                    <i class="fas fa-sync-alt"></i>
+                    Reload
+                  </button>
+                </form>
+                <form
+                  action="{{ url_for('delete_all_files') }}"
+                  method="POST"
+                  style="display: inline"
+                  onsubmit="return confirm('Hapus semua history (semua file .txt dan .pdf)? Tindakan ini tidak dapat dibatalkan.')"
+                >
+                  <button type="submit" class="reload-btn" title="Delete History" style="background: linear-gradient(135deg, #ef4444, #dc2626);">
+                    <i class="fas fa-trash-alt"></i>
+                    Delete History
+                  </button>
+                </form>
+              </div>
+            </div>
+
+            <div class="file-list">
+              {% if files %} {% for file in files %}
+              <div class="file-item">
+                <div class="file-info">
+                  <div class="file-name" title="{{ file.name }}">
+                    <i
+                      class="fas fa-file-{{ 'pdf' if file.name.endswith('.pdf') else 'alt' }} file-type-icon {{ 'txt' if file.name.endswith('.txt') }}"
+                    ></i>
+                    {{ file.name }}
+                  </div>
+                  <div class="file-size">{{ file.size_mb }} MB</div>
+                </div>
+                <div class="file-actions">
+                  <form
+                    method="POST"
+                    action="{{ url_for('delete_file', filename=file.name) }}"
+                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus file {{ file.name }}?')"
+                    style="display: inline"
+                  >
+                    <button type="submit" class="delete-btn" title="Hapus File">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </form>
+                </div>
+              </div>
+              {% endfor %} {% else %}
+              <div class="empty-files">
+                <i
+                  class="fas fa-folder-open"
+                  style="font-size: 2rem; margin-bottom: 0.5rem; display: block"
+                ></i>
+                Belum ada file yang diupload
+              </div>
+              {% endif %}
+            </div>
           </div>
         </div>
-        {% endfor %}
       </div>
-      {% elif query %}
-      <div class="no-results">
-        <i
-          class="fas fa-search"
-          style="font-size: 3rem; margin-bottom: 1rem; color: #9ca3af"
-        ></i>
-        <h3>Tidak ada hasil ditemukan</h3>
-        <p>Coba gunakan kata kunci yang berbeda atau periksa ejaan Anda.</p>
-      </div>
-      {% endif %}
     </div>
 
     <script>
-      // Search History Management using localStorage
-      let searchHistory = [];
-      const maxHistoryItems = 10;
+      // File upload handling
+      function handleFileSelect(input) {
+        const uploadArea = document.getElementById("uploadArea");
+        const files = Array.from(input.files);
 
-      // Function to save history to localStorage
-      function saveHistory() {
-        localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
-      }
-
-      // Function to load history from localStorage
-      function loadHistory() {
-        const saved = localStorage.getItem('searchHistory');
-        if (saved) {
-          searchHistory = JSON.parse(saved);
-          updateHistoryDisplay();
-        }
-      }
-
-      // Add loading animation on form submit
-      document.querySelector(".search-form").addEventListener("submit", function(e) {
-        const button = document.querySelector(".search-button");
-        const query = document.getElementById("searchInput").value.trim();
-
-        if (query) {
-          addToHistory(query);
-        }
-
-        button.innerHTML = '<div class="spinner"></div> Mencari...';
-        button.disabled = true;
-      });
-
-      // Function to add query to history
-      function addToHistory(query) {
-        // Remove if already exists
-        searchHistory = searchHistory.filter(item => item !== query);
-
-        // Add to beginning
-        searchHistory.unshift(query);
-
-        // Limit to max items
-        if (searchHistory.length > maxHistoryItems) {
-          searchHistory = searchHistory.slice(0, maxHistoryItems);
-        }
-
-        updateHistoryDisplay();
-        saveHistory();
-      }
-
-      // Function to remove item from history
-      function removeFromHistory(query) {
-        searchHistory = searchHistory.filter(item => item !== query);
-        updateHistoryDisplay();
-        saveHistory();
-      }
-
-      // Function to clear all history
-      function clearAllHistory() {
-        if (confirm("Apakah Anda yakin ingin menghapus semua riwayat pencarian?")) {
-          searchHistory = [];
-          updateHistoryDisplay();
-          localStorage.removeItem('searchHistory');
-        }
-      }
-
-      // Load history when page loads
-      document.addEventListener("DOMContentLoaded", function() {
-        loadHistory();
-        
-        // Show history container if there are items
-        if (searchHistory.length > 0) {
-          document.getElementById("historyContainer").classList.remove("hidden");
-          document.getElementById("historyToggleText").textContent = "Sembunyikan Riwayat";
-        }
-
-        // Add staggered animation to results
-        const results = document.querySelectorAll(".result-item");
-        results.forEach((result, index) => {
-          result.style.animationDelay = `${index * 0.1}s`;
-        });
-      });
-
-      // Function to update history display
-      function updateHistoryDisplay() {
-        const historyList = document.getElementById("historyList");
-        const historyEmpty = document.getElementById("historyEmpty");
-
-        if (searchHistory.length === 0) {
-          historyList.innerHTML =
-            '<div class="history-empty">Belum ada riwayat pencarian</div>';
+        // Validate number of files
+        if (files.length > 5) {
+          alert("Maksimal 5 file yang dapat diupload sekaligus");
+          input.value = ""; // Clear the input
           return;
         }
 
-        const historyHTML = searchHistory
-          .map(
-            (query) => `
-                <div class="history-item" onclick="searchFromHistory('${query.replace(
-                  /'/g,
-                  "\\'"
-                )}')">
-                    <i class="fas fa-search" style="font-size: 0.8rem;"></i>
-                    <span>${escapeHtml(query)}</span>
-                    <button class="remove-history-item" onclick="event.stopPropagation(); removeFromHistory('${query.replace(
-                      /'/g,
-                      "\\'"
-                    )}')" title="Hapus dari riwayat">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            `
-          )
-          .join("");
-
-        historyList.innerHTML = historyHTML;
-      }
-
-      // Function to search from history
-      function searchFromHistory(query) {
-        document.getElementById("searchInput").value = query;
-        document.querySelector(".search-form").submit();
-      }
-
-      // Function to escape HTML
-      function escapeHtml(text) {
-        const map = {
-          "&": "&amp;",
-          "<": "&lt;",
-          ">": "&gt;",
-          '"': "&quot;",
-          "'": "&#039;",
-        };
-        return text.replace(/[&<>"']/g, function (m) {
-          return map[m];
+        // Validate file types
+        const invalidFiles = files.filter((file) => {
+          const ext = file.name.toLowerCase().split(".").pop();
+          return !["pdf", "txt"].includes(ext);
         });
-      }
 
-      // Function to toggle history visibility
-      function toggleHistory() {
-        const container = document.getElementById("historyContainer");
-        const toggleText = document.getElementById("historyToggleText");
-
-        if (container.classList.contains("hidden")) {
-          container.classList.remove("hidden");
-          toggleText.textContent = "Sembunyikan Riwayat";
-        } else {
-          container.classList.add("hidden");
-          toggleText.textContent = "Tampilkan Riwayat";
+        if (invalidFiles.length > 0) {
+          alert("Hanya file PDF dan TXT yang diperbolehkan");
+          input.value = "";
+          return;
         }
+
+        // If validations pass, update the UI
+        const totalSize =
+          files.reduce((sum, file) => sum + file.size, 0) / (1024 * 1024);
+
+        uploadArea.innerHTML = `
+          <div class="upload-icon">
+              <i class="fas fa-files-o"></i>
+          </div>
+          <div class="upload-text">${files.length} file dipilih</div>
+          <div class="upload-hint">${totalSize.toFixed(
+            2
+          )} MB total - Siap untuk diupload</div>
+          <div class="upload-list">
+              ${files
+                .map(
+                  (file) => `
+                  <div class="upload-file">
+                      <i class="fas fa-file-${
+                        file.name.endsWith(".pdf") ? "pdf" : "alt"
+                      }"></i>
+                      ${file.name} (${(file.size / (1024 * 1024)).toFixed(
+                    2
+                  )} MB)
+                  </div>
+              `
+                )
+                .join("")}
+          </div>
+        `;
       }
 
-      // Dark mode toggle functionality
-      function toggleDarkMode() {
-        document.body.classList.toggle("dark-mode");
-        const icon = document.querySelector(".dark-mode-toggle i");
+      // Drag and drop functionality
+      const uploadArea = document.getElementById("uploadArea");
+      const fileInput = document.getElementById("fileInput");
+      const uploadForm = document.getElementById("uploadForm");
 
-        if (document.body.classList.contains("dark-mode")) {
-          icon.className = "fas fa-sun";
-          document.body.style.background =
-            "linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)";
-        } else {
-          icon.className = "fas fa-moon";
-          document.body.style.background =
-            "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
-        }
-      }
-
-      // Add floating effect to search input
-      const searchInput = document.querySelector(".search-input");
-      searchInput.addEventListener("focus", function () {
-        this.parentElement.style.transform = "translateY(-5px)";
+      ["dragenter", "dragover", "dragleave", "drop"].forEach((eventName) => {
+        uploadArea.addEventListener(eventName, preventDefaults, false);
       });
 
-      searchInput.addEventListener("blur", function () {
-        this.parentElement.style.transform = "translateY(0)";
+      function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      uploadArea.addEventListener("dragover", () => {
+        uploadArea.classList.add("dragover");
       });
 
-      // Keyboard shortcuts
-      document.addEventListener("keydown", function (e) {
-        // Ctrl + K to focus search
-        if (e.ctrlKey && e.key === "k") {
+      uploadArea.addEventListener("dragleave", () => {
+        uploadArea.classList.remove("dragover");
+      });
+
+      uploadArea.addEventListener("drop", (e) => {
+        uploadArea.classList.remove("dragover");
+        const dt = e.dataTransfer;
+        const files = Array.from(dt.files);
+
+        // Validate number of files
+        if (files.length > 5) {
+          alert("Maksimal 5 file yang dapat diupload sekaligus");
+          return;
+        }
+
+        // Validate file types
+        const invalidFiles = files.filter((file) => {
+          const ext = file.name.toLowerCase().split(".").pop();
+          return !["pdf", "txt"].includes(ext);
+        });
+
+        if (invalidFiles.length > 0) {
+          alert("Hanya file PDF dan TXT yang diperbolehkan");
+          return;
+        }
+
+        // If validations pass, update the input
+        const dataTransfer = new DataTransfer();
+        files.forEach((file) => {
+          dataTransfer.items.add(file);
+        });
+
+        fileInput.files = dataTransfer.files;
+        handleFileSelect(fileInput);
+      });
+
+      // Handle form submission
+      uploadForm.addEventListener("submit", (e) => {
+        if (!fileInput.files || fileInput.files.length === 0) {
           e.preventDefault();
-          document.getElementById("searchInput").focus();
-        }
-
-        // Escape to clear search
-        if (e.key === "Escape") {
-          document.getElementById("searchInput").value = "";
+          alert("Pilih file terlebih dahulu!");
         }
       });
-    </script>
-  </body>
-</html>
-        // Escape to clear search
-        if (e.key === "Escape") {
-          document.getElementById("searchInput").value = "";
+
+      // Dark mode toggle
+      function toggleDarkMode() {
+        const body = document.body;
+        body.classList.toggle("dark-mode");
+
+        const isDarkMode = body.classList.contains("dark-mode");
+        document.querySelector(".dark-mode-toggle i").className = isDarkMode
+          ? "fas fa-sun"
+          : "fas fa-moon";
+
+        // Save preference to local storage
+        localStorage.setItem("dark-mode", isDarkMode);
+      }
+
+      // Typewriter helpers
+      function sleep(ms) { return new Promise((r) => setTimeout(r, ms)); }
+      async function type(el, text, delay) {
+        el.textContent = "";
+        for (let i = 1; i <= text.length; i++) {
+          el.textContent = text.slice(0, i);
+          await sleep(delay);
         }
+      }
+      async function erase(el, delay) {
+        const txt = el.textContent;
+        for (let i = txt.length; i >= 0; i--) {
+          el.textContent = txt.slice(0, i);
+          await sleep(delay);
+        }
+      }
+      async function startTypewriter() {
+        const el = document.getElementById("typewriter");
+        if (!el) return;
+        const phrases = ["Selamat datang HAR", "Smart Search Engine disini"];
+        const holdMs = 5000;
+        const typeDelay = 70;
+        const eraseDelay = 40;
+        let i = 0;
+        while (true) {
+          await type(el, phrases[i], typeDelay);
+          await sleep(holdMs);
+          await erase(el, eraseDelay);
+          await sleep(holdMs);
+          i = (i + 1) % phrases.length;
+        }
+      }
+
+      // Load dark mode preference on initial load and start typewriter
+      document.addEventListener("DOMContentLoaded", () => {
+        const isDarkMode = localStorage.getItem("dark-mode") === "true";
+        if (isDarkMode) {
+          document.body.classList.add("dark-mode");
+          document.querySelector(".dark-mode-toggle i").className =
+            "fas fa-sun";
+        }
+        startTypewriter();
       });
     </script>
   </body>
